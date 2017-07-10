@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Node {
     public int id;
     public String Name;
-    private HashMap info;
+    public HashMap info;
     public Node(int a, String str, HashMap data){
         id = a;
         Name  = str;

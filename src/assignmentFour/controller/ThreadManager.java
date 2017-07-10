@@ -4,24 +4,21 @@ package assignmentFour.controller;
  * Created by venkatdatta on 07/07/17.
  */
 public class ThreadManager {
+
     private Itinerary items;
 
     public ThreadManager(){
         items = new Itinerary();
     }
 
-    public void callDBThread(){
-
-        DataReader dataThread = new DataReader(items);
-
+    public void callProducerThread(){
+        Producer dataThread = new Producer(items);
         dataThread.start();
-
     }
 
-    public void callComputeThread(){
-        ComputeThread computeThread = new ComputeThread(items);
-
-        computeThread.start();
+    public void callConsumerThread(){
+        Consumer consumer = new Consumer(items);
+        consumer.start();
     }
 
 

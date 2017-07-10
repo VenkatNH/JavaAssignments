@@ -7,13 +7,14 @@ import java.sql.*;
 /**
  * Created by venkatdatta on 07/07/17.
  */
-class DataReader extends Thread {
+class Producer extends Thread {
 
     private Itinerary itinerary;
 
-    DataReader(Itinerary items){
+    Producer(Itinerary items){
         itinerary = items;
     }
+
     public void run(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -34,7 +35,6 @@ class DataReader extends Thread {
             }
             itinerary.readComplete=true;
             itinerary.notifyReadComplete();
-            System.out.println("reading complete!!!");
 
         } catch (ClassNotFoundException e) {
             System.out.println(" MySQL JDBC Driver Not Found");
@@ -44,4 +44,5 @@ class DataReader extends Thread {
         }
 
     }
+
 }

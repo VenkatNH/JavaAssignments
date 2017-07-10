@@ -10,9 +10,11 @@ import java.util.List;
 public class ViewCart {
     public void display(List<Item> items) {
 
+        System.out.println("=====================================================================================================");
+        System.out.println(" Name         Quantity      Price per Item     Sales Tax per Item      Total Price       ");
         for (Item item : items) {
-            System.out.println("=============================================================================================================================================================");
-            System.out.printf("NAME  :  %-12s || QUANTITY :  %-12d || PRICE per item: %-12f    ||  SALES TAX per item: %-12f    ||  TOTAL PRICE : %-12f \n",item.getName(),item.getQuantity() ,item.getPrice(),
+            System.out.println("=====================================================================================================");
+            System.out.printf("%-12s   %-12d   %-12f      %-12f            %-12f \n",item.getName(),item.getQuantity() ,item.getPrice(),
                     item.getTax(),(item.getTax() + item.getPrice()) * item.getQuantity());
         }
     }

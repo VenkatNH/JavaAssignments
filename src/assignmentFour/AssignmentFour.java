@@ -9,8 +9,8 @@ public class AssignmentFour
 {
     public static void main(String args[]){
         ThreadManager manager = new ThreadManager();
-        manager.callDBThread();
-        manager.callComputeThread();
+        manager.callProducerThread();
+        manager.callConsumerThread();
 
 
     }
