@@ -1,6 +1,7 @@
 package assignmentTwo.view;
 
-import assignmentTwo.controller.SaveUser;
+import assignmentTwo.controller.UserDetails;
+import assignmentTwo.model.MenuProperties;
 import assignmentTwo.model.StudentDB;
 import assignmentTwo.controller.AddUser;
 import assignmentTwo.view.DisplayUser;
@@ -19,11 +20,12 @@ public class Menu {
         Scanner in = new Scanner(System.in);
         AddUser addUser = new AddUser();
         DisplayUser displayUser = new DisplayUser();
-        SaveUser userDetails = new SaveUser();
+        UserDetails userDetails = new UserDetails();
+        boolean recordAdded = false;
 
 
-        try {
-            while (choice >= 0) {
+        while (choice >= 0) {
+            try {
                 System.out.println("******  MENU  ******* \n" +
                         "1. Add User details.\n" +
                         "2. Display User details.\n" +
@@ -36,31 +38,34 @@ public class Menu {
                 in.nextLine();
 
                 switch (choice) {
-                    case 1:
+                    case MenuProperties.ADD_USER:
                         addUser.addUserDetails(students.studentDB);
+                        recordAdded = true;
                         break;
-                    case 2:
+                    case MenuProperties.DISPLAY_USER:
                         displayUser.displayUserDetails(students.studentDB);
 
                         break;
-                    case 3:
+                    case MenuProperties.DELETE_USER:
                         userDetails.deleteUserDetails(students.studentDB);
                         break;
-                    case 4:
+                    case MenuProperties.SAVE_USER:
                         userDetails.saveUserDetails(students);
                         break;
-                    case 5:
-                        System.out.println("Save the changes (y/n) :");
-                        if (in.next().charAt(0) == 'y')
-                            userDetails.saveUserDetails(students);
+                    case MenuProperties.EXIT:
+                        if (recordAdded) {
+                            System.out.println("Save the changes (y/n) :");
+                            if (in.next().equalsIgnoreCase("y"))
+                                userDetails.saveUserDetails(students);
+                        }
                         choice = -1;
                         break;
                 }
 
 
+            }catch (Exception e) {
+                System.out.println("[ERROR] " + e);
             }
-        } catch (Exception e) {
-            System.out.println("[ERROR] " + e);
         }
     }
 }

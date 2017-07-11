@@ -1,9 +1,11 @@
 package assignmentOne.controller;
 
 import assignmentOne.*;
+import assignmentOne.controller.validateInputFactory.ValidateFactory;
 import assignmentOne.model.Item;
 import assignmentOne.model.ItemProperties;
 import assignmentOne.model.Regex;
+import assignmentOne.model.Validate;
 
 import java.util.Scanner;
 
@@ -18,7 +20,7 @@ public class GetUserInput {
         Scanner in = new Scanner(System.in);
         String input ;
         String data[];
-        ValidateInput validate = new ValidateInput();
+        ValidateFactory validateFactory = new ValidateFactory();
         Item item = new Item();
         System.out.println("Enter the Input :");
         System.out.println("Hint : \n--name <Name of Item> \n" +
@@ -33,10 +35,8 @@ public class GetUserInput {
             if (i == 0 && !data[0].equalsIgnoreCase(ItemProperties.NAME))
                 throw new InvalidInputException("Expecting --name parameter");
 
-            if (checkProperty(data[0]) && data.length > 1) {
-
-                if (validate.validateName(data)) {
-
+            switch (validateFactory.validateProperty(data).validate(data)){
+                case Validate.NAME:
                     if(data.length > 2){
                         String temp="";
 
@@ -47,24 +47,20 @@ public class GetUserInput {
 
                     }else
                         item.setName(data[1]);
-
-                } else if (validate.validateItemType(data)) {
-
-                    item.setType(data[1]);
-
-                } else if (validate.validateQuantity(data)) {
-
+                    break;
+                case Validate.QUANTITY:
                     item.setQuantity(Integer.parseInt(data[1]));
-
-                } else if (validate.validatePrice(data)) {
-
+                    break;
+                case Validate.PRICE:
                     item.setPrice(Double.parseDouble(data[1]));
-
-                }
-            } else {
-
-                throw new InvalidInputException("Invalid Input Format");
+                    break;
+                case Validate.TYPE:
+                    item.setType(data[1]);
+                    break;
+                default:
+                    System.out.println("ERROR");
             }
+
         }
 
         return item;
@@ -74,41 +70,39 @@ public class GetUserInput {
     public Item setItemProperties(String args[]) throws InvalidInputException{
         Item item = new Item();
         String data[] = new String[2];
-        ValidateInput validateInput = new ValidateInput();
+        ValidateFactory validateFactory = new ValidateFactory();
         for (int i = 0; i < args.length; i += 2) {
 
             data[0] = args[i];
             data[1] = args[i+1];
 
-            if (validateInput.validateName(data)) {
+            switch (validateFactory.validateProperty(data).validate(data)){
+                case Validate.NAME:
+                    if(data.length > 2){
+                        String temp="";
 
-                item.setName(args[i + 1]);
+                        for(int x=1; x<data.length;x++)
+                            temp +=" "+data[x];
 
-            } else if (validateInput.validatePrice(data)) {
+                        item.setName(temp);
 
-                item.setPrice(Double.parseDouble(args[i + 1]));
-
-            } else if (validateInput.validateQuantity(data)) {
-
-                item.setQuantity(Integer.parseInt(args[i + 1]));
-
-            } else if (validateInput.validateItemType(data)) {
-
-                   item.setType(args[i + 1]);
+                    }else
+                        item.setName(data[1]);
+                    break;
+                case Validate.QUANTITY:
+                    item.setQuantity(Integer.parseInt(data[1]));
+                    break;
+                case Validate.PRICE:
+                    item.setPrice(Double.parseDouble(data[1]));
+                    break;
+                case Validate.TYPE:
+                    item.setType(data[1]);
+                    break;
+                default:
+                    System.out.println("ERROR");
             }
         }
         return item;
-    }
-
-    /* Check for a valid Item Property */
-    private boolean checkProperty(String val) {
-        if (val.equalsIgnoreCase(ItemProperties.NAME)
-                || val.equalsIgnoreCase(ItemProperties.PRICE)
-                || val.equalsIgnoreCase(ItemProperties.QUANTITY)
-                || val.equalsIgnoreCase(ItemProperties.TYPE))
-            return true;
-        else
-            return false;
     }
 
 }

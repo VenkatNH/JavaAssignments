@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 /**
  * Created by venkatdatta on 06/07/17.
  */
-public class SaveUser {
+public class UserDetails {
 
     private static final String USERFILE = "studentDB.txt";
 
@@ -50,7 +50,7 @@ public class SaveUser {
     public void saveUserDetails(StudentDB students){
 
         try {
-            FileOutputStream file = new FileOutputStream(new File(SaveUser.USERFILE));
+            FileOutputStream file = new FileOutputStream(new File(UserDetails.USERFILE));
             ObjectOutputStream obj = new ObjectOutputStream(file);
             obj.writeObject(students);
             obj.close();
@@ -66,7 +66,7 @@ public class SaveUser {
     public StudentDB loadUserDetails(){
         StudentDB database = null ;
         try {
-            FileInputStream file = new FileInputStream(new File(SaveUser.USERFILE));
+            FileInputStream file = new FileInputStream(new File(UserDetails.USERFILE));
             ObjectInputStream obj = new ObjectInputStream(file);
             database = (StudentDB) obj.readObject();
             obj.close();

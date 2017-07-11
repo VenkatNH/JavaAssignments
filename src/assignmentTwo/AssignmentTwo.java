@@ -5,7 +5,7 @@ package assignmentTwo;
  */
 
 import assignmentTwo.comparators.NameComparator;
-import assignmentTwo.controller.SaveUser;
+import assignmentTwo.controller.UserDetails;
 import assignmentTwo.model.StudentDB;
 import assignmentTwo.view.Menu;
 
@@ -15,7 +15,7 @@ public class AssignmentTwo {
     public static void main(String args[]){
         StudentDB database;
 
-        SaveUser userDetails = new SaveUser();
+        UserDetails userDetails = new UserDetails();
         database = userDetails.loadUserDetails();
 
         if(database == null) {
